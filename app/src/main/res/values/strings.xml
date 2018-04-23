@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">超强工具集</string>
+    <string name="accessibility_service_description">可执行模拟点击，模拟返回，模拟滑动等操作，获取页面所有信息，只有你想不到，没有我做不到，就是这么屌！</string>
+    <string name="wallpaper_name">LiveWallpaper(Coolspan)</string>
+    <string name="static_wallpaper">静态壁纸</string>
+    <string name="use_resource_wallpaper">使用资源文件设置壁纸</string>
+    <string name="use_bitmap_wallpaper">使用Bitmap设置壁纸</string>
+    <string name="clear_wallpaper">清除壁纸</string>
+    <string name="live_wallpaper">动态壁纸</string>
+    <string name="set_live_wallpaper">设置动态壁纸</string>
+</resources>

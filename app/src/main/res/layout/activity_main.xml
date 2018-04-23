@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.viapalm.schchildpre.MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hello World!"/>
+
+            <ViewStub
+                android:id="@+id/viewStub"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout="@layout/layout"/>
+
+            <Button
+                android:id="@+id/btn_sms"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="根据短信获取手机号"/>
+
+            <Button
+                android:id="@+id/btn_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="一键锁屏"/>
+
+            <Button
+                android:id="@+id/btn_led"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="LED灯"/>
+
+            <Button
+                android:id="@+id/btn_customView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="萤火虫飞舞粒子动画"/>
+
+            <Button
+                android:id="@+id/btn_permission"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="权限设置"/>
+
+            <Button
+                android:id="@+id/btn_call"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="通话记录"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_accessibility"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="辅助功能"/>
+
+                <CheckBox
+                    android:id="@+id/cb_wx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="微信公众号取关"/>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_setwallpaper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="设置壁纸"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
