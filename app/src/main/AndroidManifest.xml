@@ -170,7 +170,7 @@
         </service>
         <!-- 配置视屏壁纸Service - - - - - - - - - - - - - - -->
         <service
-            android:name=".wallpaper.ui.VideoLiveWallpaper"
+            android:name=".wallpaper.service.VideoLiveWallpaperService"
             android:label="@string/app_name"
             android:permission="android.permission.BIND_WALLPAPER">
             <intent-filter>
@@ -182,7 +182,7 @@
         </service>
         <!-- 配置相机壁纸Service - - - - - - - - - - - - - - - -->
         <service
-            android:name=".wallpaper.ui.CameraLiveWallpaper"
+            android:name=".wallpaper.service.CameraLiveWallpaperService"
             android:label="app"
             android:permission="android.permission.BIND_WALLPAPER">
 

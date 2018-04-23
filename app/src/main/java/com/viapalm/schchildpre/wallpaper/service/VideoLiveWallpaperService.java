@@ -1,4 +1,4 @@
-package com.viapalm.schchildpre.wallpaper.ui;
+package com.viapalm.schchildpre.wallpaper.service;
 
 import android.app.WallpaperManager;
 import android.content.BroadcastReceiver;
@@ -17,7 +17,7 @@ import java.io.IOException;
 /**
  * thx for https://github.com/songixan/Wallpaper
  */
-public class VideoLiveWallpaper extends WallpaperService {
+public class VideoLiveWallpaperService extends WallpaperService {
 
 
     public Engine onCreateEngine() {
@@ -30,21 +30,21 @@ public class VideoLiveWallpaper extends WallpaperService {
     public static final int ACTION_VOICE_NORMAL = 111;
 
     public static void voiceSilence(Context context) {
-        Intent intent = new Intent(VideoLiveWallpaper.VIDEO_PARAMS_CONTROL_ACTION);
-        intent.putExtra(VideoLiveWallpaper.KEY_ACTION, VideoLiveWallpaper.ACTION_VOICE_SILENCE);
+        Intent intent = new Intent(VideoLiveWallpaperService.VIDEO_PARAMS_CONTROL_ACTION);
+        intent.putExtra(VideoLiveWallpaperService.KEY_ACTION, VideoLiveWallpaperService.ACTION_VOICE_SILENCE);
         context.sendBroadcast(intent);
     }
 
     public static void voiceNormal(Context context) {
-        Intent intent = new Intent(VideoLiveWallpaper.VIDEO_PARAMS_CONTROL_ACTION);
-        intent.putExtra(VideoLiveWallpaper.KEY_ACTION, VideoLiveWallpaper.ACTION_VOICE_NORMAL);
+        Intent intent = new Intent(VideoLiveWallpaperService.VIDEO_PARAMS_CONTROL_ACTION);
+        intent.putExtra(VideoLiveWallpaperService.KEY_ACTION, VideoLiveWallpaperService.ACTION_VOICE_NORMAL);
         context.sendBroadcast(intent);
     }
 
     public static void setToWallPaper(Context context) {
         final Intent intent = new Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
         intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT,
-                new ComponentName(context, VideoLiveWallpaper.class));
+                new ComponentName(context, VideoLiveWallpaperService.class));
         context.startActivity(intent);
     }
 

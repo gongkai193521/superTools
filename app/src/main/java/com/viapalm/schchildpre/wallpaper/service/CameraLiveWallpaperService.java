@@ -1,4 +1,4 @@
-package com.viapalm.schchildpre.wallpaper.ui;
+package com.viapalm.schchildpre.wallpaper.service;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +9,7 @@ import android.view.SurfaceHolder;
 
 import java.io.IOException;
 
-public class CameraLiveWallpaper extends WallpaperService {
+public class CameraLiveWallpaperService extends WallpaperService {
     // 实现WallpaperService必须实现的抽象方法
     public Engine onCreateEngine() {
         // 返回自定义的CameraEngine
@@ -31,7 +31,6 @@ public class CameraLiveWallpaper extends WallpaperService {
         @Override
         public void onCreate(SurfaceHolder surfaceHolder) {
             super.onCreate(surfaceHolder);
-
             startPreview();
             // 设置处理触摸事件
             setTouchEventsEnabled(true);

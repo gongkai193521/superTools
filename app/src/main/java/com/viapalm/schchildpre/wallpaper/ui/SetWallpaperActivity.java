@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.viapalm.schchildpre.Constant;
 import com.viapalm.schchildpre.R;
 import com.viapalm.schchildpre.base.BaseActivity;
+import com.viapalm.schchildpre.wallpaper.service.CameraLiveWallpaperService;
+import com.viapalm.schchildpre.wallpaper.service.VideoLiveWallpaperService;
 import com.viapalm.schchildpre.wallpaper.util.WallpaperUtil;
 
 import java.io.IOException;
@@ -52,10 +54,10 @@ public class SetWallpaperActivity extends BaseActivity {
                     CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // 静音
-                    VideoLiveWallpaper.voiceSilence(getApplicationContext());
+                    VideoLiveWallpaperService.voiceSilence(getApplicationContext());
                     Constant.wallpaper_sound_checkd = true;
                 } else {
-                    VideoLiveWallpaper.voiceNormal(getApplicationContext());
+                    VideoLiveWallpaperService.voiceNormal(getApplicationContext());
                     Constant.wallpaper_sound_checkd = false;
                 }
             }
@@ -68,7 +70,7 @@ public class SetWallpaperActivity extends BaseActivity {
     }
 
     public void setVideoToWallPaper(View view) {
-        VideoLiveWallpaper.setToWallPaper(this);
+        VideoLiveWallpaperService.setToWallPaper(this);
     }
 
     public void setCameraToWallPaper(View view) {
@@ -137,7 +139,7 @@ public class SetWallpaperActivity extends BaseActivity {
             ActivityCompat.requestPermissions(this,
                     new String[]{PERMISSION_CAMERA}, 100);
         } else {
-            CameraLiveWallpaper.setCameratWallpaper(this);
+            CameraLiveWallpaperService.setCameratWallpaper(this);
         }
     }
 
@@ -149,7 +151,7 @@ public class SetWallpaperActivity extends BaseActivity {
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    CameraLiveWallpaper.setCameratWallpaper(this);
+                    CameraLiveWallpaperService.setCameratWallpaper(this);
 
                 } else {
                     Toast.makeText(this, "请先开启相机权限", Toast.LENGTH_SHORT).show();
