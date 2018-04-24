@@ -20,6 +20,13 @@ android {
             debuggable true
         }
     }
+    //修改生成的apk名字
+    android.applicationVariants.all { variant ->
+        variant.outputs.all {
+            def releaseApkName = 'superTools_' + variant.buildType.name + '.apk'
+            outputFileName = new File("/deploy", releaseApkName)
+        }
+    }
 }
 apply plugin: 'com.jakewharton.butterknife'
 dependencies {
