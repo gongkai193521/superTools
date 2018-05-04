@@ -3,10 +3,12 @@ package com.gkail.tools.wifi;
 import android.content.Context;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.gkail.tools.util.ToastUtils;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -61,30 +63,34 @@ public class WifiHostManager {
     /**
      * wifi热点开关
      *
-     * @param enabled true：打开  false：关闭
      * @return true：成功  false：失败
      */
-    public boolean setWifiApEnabled(boolean enabled) {
-        if (enabled) { // disable WiFi in any case
-            //wifi和热点不能同时打开，所以打开热点的时候需要关闭wifi
+    public boolean setWifiApEnabled(String ssid, boolean b, String preSharedKey) {
+        if (wifiManager.isWifiEnabled()) {
             wifiManager.setWifiEnabled(false);
-        } else {
-            wifiManager.setWifiEnabled(true);
         }
         try {
             //热点的配置类
             WifiConfiguration apConfig = new WifiConfiguration();
             //配置热点的名称(可以在名字后面加点随机数什么的)
-            apConfig.SSID = WIFI_HOST_SSID;
-            //配置热点的密码
-            apConfig.preSharedKey = WIFI_HOST_PRESHARED_KEY;
-            //安全：WPA2_PSK
-            apConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+            if (TextUtils.isEmpty(ssid)) {
+                apConfig.SSID = WIFI_HOST_SSID;
+            } else {
+                apConfig.SSID = ssid;
+            }
+            if (b) {
+                //安全：WPA2_PSK
+                apConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+                //配置热点的密码
+                apConfig.preSharedKey = preSharedKey;
+            } else {
+                apConfig.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
+            }
             //通过反射调用设置热点
             Method method = wifiManager.getClass().getMethod("setWifiApEnabled",
                     WifiConfiguration.class, Boolean.TYPE);
             //返回热点打开状态
-            return (Boolean) method.invoke(wifiManager, apConfig, enabled);
+            return (Boolean) method.invoke(wifiManager, apConfig, true);
         } catch (Exception e) {
             ToastUtils.showSingleToast(mContext, "开启热点失败");
             return false;
@@ -136,5 +142,26 @@ public class WifiHostManager {
         } catch (Throwable ignored) {
         }
         return false;
+    }
+
+    /**
+     * 关闭WiFi热点
+     */
+    public void closeWifiHotspot() {
+        try {
+            Method method = wifiManager.getClass().getMethod("getWifiApConfiguration");
+            method.setAccessible(true);
+            WifiConfiguration config = (WifiConfiguration) method.invoke(wifiManager);
+            Method method2 = wifiManager.getClass().getMethod("setWifiApEnabled", WifiConfiguration.class, boolean.class);
+            method2.invoke(wifiManager, config, false);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        }
     }
 }

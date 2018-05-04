@@ -24,6 +24,7 @@
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <uses-permission android:name="android.permission.SET_WALLPAPER"/>
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <!-- 获取读取通讯录记录的权限 -->
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
@@ -76,7 +77,7 @@
             </intent-filter>
         </receiver>
         <receiver
-            android:name="com.viapalm.schchildpre.autostart.BootCompletedReceiver"
+            android:name=".autostart.BootCompletedReceiver"
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.RECEIVE_BOOT_COMPLETED">

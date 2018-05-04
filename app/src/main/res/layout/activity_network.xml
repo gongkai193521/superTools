@@ -17,9 +17,34 @@
         android:onClick="setNetWork"
         android:text="设置数据网络"/>
 
+    <EditText
+        android:id="@+id/et_wifiHostName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="网络名称"/>
+
+    <Spinner
+        android:id="@+id/sp_security"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="安全性"/>
+
+    <EditText
+        android:id="@+id/et_wifiHostPas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="密码至少包含8个字符"
+        android:visibility="gone"/>
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="setWifiHost"
-        android:text="设置热点"/>
+        android:text="开启热点"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="closeWifiHost"
+        android:text="关闭热点"/>
 </LinearLayout>
