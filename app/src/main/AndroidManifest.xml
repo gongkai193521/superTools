@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.viapalm.schchildpre"
+          package="com.gkail.tools"
           android:installLocation="internalOnly">
 
     <uses-feature android:glEsVersion="0x00020000"/>
 
     <uses-permission android:name="android.intent.action.BOOT_COMPLETED"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
@@ -24,7 +25,13 @@
     <uses-permission android:name="android.permission.SET_WALLPAPER"/>
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <!-- 获取读取通讯录记录的权限 -->
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.READ_CALL_LOG"/>
+    <uses-permission android:name="android.permission.WRITE_CALL_LOG"/>
+
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"/>
+    <uses-permission android:name="android.permission.CLEAR_APP_CACHE"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
 
@@ -33,7 +40,7 @@
     <uses-permission android:name="android.permission.FLASHLIGHT"/>
     <uses-permission android:name="android.permission.HARDWARE_TEST"/>
 
-
+    <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     <uses-permission android:name="android.permission.DISABLE_KEYGUARD"/>
 
@@ -56,8 +63,9 @@
         <activity android:name=".sms.SMSActivatity"/>
         <activity android:name=".led.LEDActivity"/>
         <activity android:name=".customview.ViewActivity"/>
-        <activity android:name=".callrecords.CallActivity"/>
+        <activity android:name=".call.CallActivity"/>
         <activity android:name=".wallpaper.ui.SetWallpaperActivity"/>
+        <activity android:name=".wifi.NetWorkActivity"/>
 
         <receiver android:name=".lock.AdminManageReceiver">
             <meta-data
@@ -143,6 +151,7 @@
             </intent-filter>
         </receiver>
 
+        <service android:name=".call.EndCallService"/>
         <service
             android:name=".accessibility.MyAccessibilityService"
             android:exported="true"

@@ -6,17 +6,21 @@ android {
         applicationId "com.gkail.tools"
         minSdkVersion 16
         targetSdkVersion 23
-        versionCode 5
+        versionCode 1
         versionName "1.0.0"
+        flavorDimensions "versionCode"
         multiDexEnabled true
     }
     buildTypes {
         release {
-            minifyEnabled false
-            debuggable true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            minifyEnabled true
+            debuggable false
         }
         debug {
+            debuggable true
+        }
+        tst {
+            minifyEnabled true
             debuggable true
         }
     }
