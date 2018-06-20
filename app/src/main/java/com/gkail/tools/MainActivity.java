@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.Button;
@@ -49,6 +50,8 @@ public class MainActivity extends BaseActivity {
     Button normalModel;
     @BindView(R.id.btn_network)
     Button network;
+    @BindView(R.id.btn_test)
+    Button stackView;
     @BindView(R.id.viewStub)
     ViewStub mViewStub;
     @BindView(R.id.cb_wx)
@@ -82,12 +85,17 @@ public class MainActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("----", " == " + ElhhProvider.getTenantId(this));
+    }
 
     private PermissionManager mPermissionManager;
 
     @OnClick({R.id.btn, R.id.btn_sms, R.id.btn_lock, R.id.btn_led, R.id.btn_customView,
             R.id.btn_permission, R.id.btn_call, R.id.btn_accessibility, R.id.btn_setwallpaper,
-            R.id.btn_silentModel, R.id.btn_normalModel, R.id.btn_network})
+            R.id.btn_silentModel, R.id.btn_normalModel, R.id.btn_network, R.id.btn_test})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn:
@@ -141,6 +149,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn_network:
                 startActivity(new Intent(this, NetWorkActivity.class));
+                break;
+            case R.id.btn_test:
+                startActivity(new Intent(this, TestActivity.class));
                 break;
         }
     }
