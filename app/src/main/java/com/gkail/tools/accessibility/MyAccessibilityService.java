@@ -35,12 +35,12 @@ public class MyAccessibilityService extends AccessibilityService {
                     if (!Constant.wx_checkd) {
                         break;
                     }
-                    if ("com.tencent.mm.ui.base.r".equals(clsName)) {
+                    if ("com.tencent.mm.ui.base.p".equals(clsName)) {
                         performScroll(nodeInfo);
                     }
                     //取消关注微信公众号
-                    if ("com.tencent.mm.plugin.brandservice.ui.BrandServiceIndexUI||com.tencent.mm.ui.base.r".contains(clsName)) {
-                        List<AccessibilityNodeInfo> infos = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/un");
+                    if ("com.tencent.mm.plugin.brandservice.ui.BrandServiceIndexUI".contains(clsName)) {
+                        List<AccessibilityNodeInfo> infos = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/a3e");//com.tencent.mm:id/a3d
                         for (AccessibilityNodeInfo info : infos) {
                             performLongClick(info);
                         }
@@ -54,9 +54,11 @@ public class MyAccessibilityService extends AccessibilityService {
                         }
                     }
                     //不再关注
-                    if ("com.tencent.mm.ui.base.i".equals(clsName)) {
+                    if ("com.tencent.mm.ui.widget.a.c".equals(clsName)) {
                         List<AccessibilityNodeInfo> infos = nodeInfo.findAccessibilityNodeInfosByViewId("com.tencent.mm:id/all");
-//                        List<AccessibilityNodeInfo> infos = nodeInfo.findAccessibilityNodeInfosByText("不再关注");
+                        if (infos == null || infos.size() == 0) {
+                            infos = nodeInfo.findAccessibilityNodeInfosByText("不再关注");
+                        }
                         for (AccessibilityNodeInfo info : infos) {
                             if (info.isEnabled()) {
                                 performClick(info);
