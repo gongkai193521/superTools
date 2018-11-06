@@ -1,22 +1,28 @@
 package com.gkail.tools;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.media.projection.MediaProjectionManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import com.gkail.tools.activity.TestActivity;
 import com.gkail.tools.base.BaseActivity;
 import com.gkail.tools.call.CallActivity;
 import com.gkail.tools.customview.ViewActivity;
+import com.gkail.tools.floatwindow.FloatWindowManager;
 import com.gkail.tools.led.LEDActivity;
 import com.gkail.tools.lock.LockActivity;
 import com.gkail.tools.permission.PermissionManager;
+import com.gkail.tools.service.ScreenService;
 import com.gkail.tools.sms.SMSActivatity;
 import com.gkail.tools.util.SoundUtils;
 import com.gkail.tools.wallpaper.ui.SetWallpaperActivity;
@@ -52,6 +58,8 @@ public class MainActivity extends BaseActivity {
     Button network;
     @BindView(R.id.btn_test)
     Button stackView;
+    @BindView(R.id.btn_capture)
+    Button capture;
     @BindView(R.id.viewStub)
     ViewStub mViewStub;
     @BindView(R.id.cb_wx)
@@ -68,6 +76,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initView() {
+        mMediaProjectionManager = (MediaProjectionManager) getApplication().getSystemService(Context.MEDIA_PROJECTION_SERVICE);
         if (Constant.wx_checkd) {
             cb_wx.setChecked(true);
         } else {
@@ -88,14 +97,13 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.i("----", " == " + ElhhProvider.getTenantId(this));
     }
 
     private PermissionManager mPermissionManager;
 
     @OnClick({R.id.btn, R.id.btn_sms, R.id.btn_lock, R.id.btn_led, R.id.btn_customView,
             R.id.btn_permission, R.id.btn_call, R.id.btn_accessibility, R.id.btn_setwallpaper,
-            R.id.btn_silentModel, R.id.btn_normalModel, R.id.btn_network, R.id.btn_test})
+            R.id.btn_silentModel, R.id.btn_normalModel, R.id.btn_network, R.id.btn_test, R.id.btn_capture})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn:
@@ -153,6 +161,46 @@ public class MainActivity extends BaseActivity {
             case R.id.btn_test:
                 startActivity(new Intent(this, TestActivity.class));
                 break;
+            case R.id.btn_capture:
+//                startIntent();
+                FloatWindowManager.showFloatView();
+                break;
         }
     }
+
+    private int result = 0;
+    private Intent intent = null;
+    private int REQUEST_MEDIA_PROJECTION = 1;
+    private MediaProjectionManager mMediaProjectionManager;
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    private void startIntent() {
+        if (intent != null && result != 0) {
+            ((MainApplication) getApplication()).setResultCode(result);
+            ((MainApplication) getApplication()).setIntent(intent);
+            Intent intent = new Intent(getApplicationContext(), ScreenService.class);
+            startService(intent);
+        } else {
+            startActivityForResult(mMediaProjectionManager.createScreenCaptureIntent(), REQUEST_MEDIA_PROJECTION);
+            ((MainApplication) getApplication()).setmMediaProjectionManager(mMediaProjectionManager);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_MEDIA_PROJECTION) {
+            if (resultCode != Activity.RESULT_OK) {
+                return;
+            } else if (data != null && resultCode != 0) {
+                result = resultCode;
+                intent = data;
+                ((MainApplication) getApplication()).setResultCode(resultCode);
+                ((MainApplication) getApplication()).setIntent(data);
+                Intent intent = new Intent(getApplicationContext(), ScreenService.class);
+                startService(intent);
+            }
+        }
+    }
+
 }

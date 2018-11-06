@@ -1,4 +1,4 @@
-package com.gkail.tools;
+package com.gkail.tools.activity;
 
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.SimpleAdapter;
 import android.widget.StackView;
 
+import com.gkail.tools.R;
 import com.gkail.tools.base.BaseActivity;
 import com.gkail.tools.util.ToastUtils;
 
