@@ -45,6 +45,10 @@
         <com.gkail.tools.customview.DrawView
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
+        <com.gkail.tools.customview.MGridView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
     </FrameLayout>
 
 </ScrollView>

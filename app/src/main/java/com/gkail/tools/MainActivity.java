@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import com.gkail.tools.activity.SensorActivity;
 import com.gkail.tools.activity.TestActivity;
 import com.gkail.tools.base.BaseActivity;
 import com.gkail.tools.call.CallActivity;
@@ -111,6 +112,7 @@ public class MainActivity extends BaseActivity {
                 if (mViewStub != null) {
                     mViewStub.inflate();
                 }
+                startActivity(new Intent(mContext, SensorActivity.class));
                 break;
             case R.id.btn_sms:
                 startActivity(new Intent(this, SMSActivatity.class));
