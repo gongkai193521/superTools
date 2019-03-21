@@ -25,12 +25,18 @@ import com.gkail.tools.lock.LockActivity;
 import com.gkail.tools.permission.PermissionManager;
 import com.gkail.tools.service.ScreenService;
 import com.gkail.tools.sms.SMSActivatity;
+import com.gkail.tools.util.ScreenBrightnessUtils;
 import com.gkail.tools.util.SoundUtils;
 import com.gkail.tools.wallpaper.ui.SetWallpaperActivity;
 import com.gkail.tools.wifi.NetWorkActivity;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
 
 public class MainActivity extends BaseActivity {
     @BindView(R.id.btn)
@@ -65,6 +71,10 @@ public class MainActivity extends BaseActivity {
     ViewStub mViewStub;
     @BindView(R.id.cb_wx)
     CheckBox cb_wx;
+    @BindView(R.id.cb1)
+    CheckBox cb1;
+    @BindView(R.id.btn_recyclerView)
+    Button btn_recyclerView;
 
     @Override
     public int setContentView() {
@@ -77,6 +87,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initView() {
+        mObservable.subscribe(mObserver);
         mMediaProjectionManager = (MediaProjectionManager) getApplication().getSystemService(Context.MEDIA_PROJECTION_SERVICE);
         if (Constant.wx_checkd) {
             cb_wx.setChecked(true);
@@ -86,11 +97,13 @@ public class MainActivity extends BaseActivity {
         cb_wx.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    Constant.wx_checkd = true;
-                } else {
-                    Constant.wx_checkd = false;
-                }
+                Constant.wx_checkd = isChecked;
+            }
+        });
+        cb1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                ScreenBrightnessUtils.autoBrightness(mContext, isChecked);
             }
         });
     }
@@ -104,7 +117,8 @@ public class MainActivity extends BaseActivity {
 
     @OnClick({R.id.btn, R.id.btn_sms, R.id.btn_lock, R.id.btn_led, R.id.btn_customView,
             R.id.btn_permission, R.id.btn_call, R.id.btn_accessibility, R.id.btn_setwallpaper,
-            R.id.btn_silentModel, R.id.btn_normalModel, R.id.btn_network, R.id.btn_test, R.id.btn_capture})
+            R.id.btn_silentModel, R.id.btn_normalModel, R.id.btn_network, R.id.btn_test,
+            R.id.btn_capture, R.id.btn_recyclerView})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn:
@@ -158,14 +172,17 @@ public class MainActivity extends BaseActivity {
                 }
                 break;
             case R.id.btn_network:
-                startActivity(new Intent(this, NetWorkActivity.class));
+                startActivity(new Intent(mContext, NetWorkActivity.class));
                 break;
             case R.id.btn_test:
-                startActivity(new Intent(this, TestActivity.class));
+                startActivity(new Intent(mContext, TestActivity.class));
                 break;
             case R.id.btn_capture:
 //                startIntent();
                 FloatWindowManager.showFloatView();
+                break;
+            case R.id.btn_recyclerView:
+                startActivity(new Intent(mContext, RecyclerViewActivity.class));
                 break;
         }
     }
@@ -205,4 +222,33 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    Observable mObservable = Observable.create(new ObservableOnSubscribe<Integer>() {
+
+        @Override
+        public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
+            emitter.onNext(1);
+        }
+    });
+    Observer mObserver = new Observer<Integer>() {
+        @Override
+        public void onSubscribe(Disposable d) {
+
+        }
+
+        @Override
+        public void onNext(Integer integer) {
+
+        }
+
+
+        @Override
+        public void onError(Throwable e) {
+
+        }
+
+        @Override
+        public void onComplete() {
+
+        }
+    };
 }

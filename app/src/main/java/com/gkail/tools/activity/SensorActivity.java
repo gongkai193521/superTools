@@ -95,6 +95,15 @@ public class SensorActivity extends BaseActivity implements OnClickListener {
         for (Sensor sensor : sensorList) {
             LogUtils.i("传感器：" + sensor.getName());
         }
+        SensorManagerHelper sensorHelper = new SensorManagerHelper(this);
+        sensorHelper.setOnShakeListener(new SensorManagerHelper.OnShakeListener() {
+
+            @Override
+            public void onShake() {
+                // TODO Auto-generated method stub
+                Toast.makeText(mContext, "你在摇哦", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     // Create a 陀螺仪listener

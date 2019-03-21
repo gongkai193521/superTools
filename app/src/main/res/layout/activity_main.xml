@@ -24,7 +24,7 @@
                 android:id="@+id/btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hello World!"/>
+                android:text="传感器"/>
 
             <ViewStub
                 android:id="@+id/viewStub"
@@ -131,6 +131,18 @@
                 android:layout_height="wrap_content"
                 android:text="截屏"/>
 
+            <Button
+                android:id="@+id/btn_recyclerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="recyclerView"/>
+
+            <CheckBox
+                android:id="@+id/cb1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="自动调节亮度"
+                android:textColor="@color/colorAccent"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

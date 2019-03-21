@@ -112,7 +112,7 @@ public class PermissionManager {
         }
     }
 
-    private static String getMiuiVersion() {
+    private String getMiuiVersion() {
         String propName = "ro.miui.ui.version.name";
         String line;
         BufferedReader input = null;
