@@ -38,33 +38,20 @@ public class GetHtmlActivity extends Activity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                getPageSource();
+                getPageSource("http://kidcares.cn/", "UTF8");
                 mHandler.sendEmptyMessage(0);
             }
         }).start();
     }
 
-    private String pageUrl;//定义需要操作的网页地址
-    private String pageEncode = "UTF8";//定义需要操作的网页的编码
-
-    public String getPageUrl() {
-        return pageUrl;
-    }
-
-    public void setPageUrl(String pageUrl) {
-        this.pageUrl = pageUrl;
-    }
-
-    public String getPageEncode() {
-        return pageEncode;
-    }
-
-    public void setPageEncode(String pageEncode) {
-        this.pageEncode = pageEncode;
-    }
-
-    //定义取源码的方法
-    public String getPageSource() {
+    /**
+     * 定义取源码的方法
+     *
+     * @param pageUrl    需要操作的网页地址
+     * @param pageEncode 需要操作的网页的编码
+     * @return
+     */
+    public String getPageSource(String pageUrl, String pageEncode) {
         StringBuffer sb = new StringBuffer();
         try {
             //构建一URL对象

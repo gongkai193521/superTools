@@ -1,4 +1,4 @@
-package com.gkail.tools.activity;
+package com.gkail.tools.sensor;
 
 import android.content.Context;
 import android.graphics.Color;

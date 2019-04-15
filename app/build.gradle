@@ -5,7 +5,7 @@ android {
     defaultConfig {
         applicationId "com.gkail.tools"
         minSdkVersion 16
-        targetSdkVersion 23
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0.0"
         flavorDimensions "versionCode"
@@ -24,6 +24,9 @@ android {
             debuggable true
         }
     }
+    dataBinding {
+        enabled = true
+    }
     //修改生成的apk名字
     android.applicationVariants.all { variant ->
         variant.outputs.all {
@@ -31,6 +34,12 @@ android {
             outputFileName = new File("/deploy", releaseApkName)
         }
     }
+    allprojects {
+        configurations {
+            all*.exclude group: 'com.android.support', module: 'support-v4'
+        }
+    }
+
 }
 apply plugin: 'com.jakewharton.butterknife'
 dependencies {
@@ -43,5 +52,6 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.4'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    //noinspection GradleCompatible
     implementation 'com.android.support:recyclerview-v7:26.0.0'
 }

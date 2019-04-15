@@ -19,7 +19,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class MyAccessibilityService1 extends AccessibilityService {
+public class MyAccessibilityService extends AccessibilityService {
     String pkgName;
     String clsName;
     private AccessibilityNodeInfo nodeInfo;

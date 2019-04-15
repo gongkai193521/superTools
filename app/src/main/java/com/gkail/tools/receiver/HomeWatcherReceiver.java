@@ -1,4 +1,4 @@
-package com.gkail.tools.accessibility.receiver;
+package com.gkail.tools.receiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

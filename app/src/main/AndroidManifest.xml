@@ -83,9 +83,11 @@
             android:name=".activity.TestActivity"
             android:configChanges="orientation|screenSize"/>
         <activity
-            android:name=".activity.SensorActivity"
+            android:name=".sensor.SensorActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".RecyclerViewActivity"/>
+        <activity android:name=".recyclerview.RecyclerViewActivity"/>
+        <activity android:name=".activity.GetHtmlActivity"/>
+        <activity android:name=".RxjavaTestActivity"/>
 
         <receiver android:name=".lock.AdminManageReceiver">
             <meta-data
@@ -173,7 +175,7 @@
 
         <service android:name=".call.EndCallService"/>
         <service
-            android:name=".accessibility.accessibility.MyAccessibilityService"
+            android:name=".accessibility.MyAccessibilityService"
             android:exported="true"
             android:label="超强辅助操作服务"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">

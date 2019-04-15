@@ -1,4 +1,4 @@
-package com.gkail.tools;
+package com.gkail.tools.recyclerview;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
+import com.gkail.tools.R;
 import com.gkail.tools.base.BaseActivity;
 
 import java.util.ArrayList;

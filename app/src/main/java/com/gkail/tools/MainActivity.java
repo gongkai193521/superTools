@@ -14,15 +14,16 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
-import com.gkail.tools.activity.SensorActivity;
 import com.gkail.tools.activity.TestActivity;
 import com.gkail.tools.base.BaseActivity;
 import com.gkail.tools.call.CallActivity;
 import com.gkail.tools.customview.ViewActivity;
+import com.gkail.tools.device.DeviceInfoActivity;
 import com.gkail.tools.floatwindow.FloatWindowManager;
 import com.gkail.tools.led.LEDActivity;
 import com.gkail.tools.lock.LockActivity;
 import com.gkail.tools.permission.PermissionManager;
+import com.gkail.tools.recyclerview.RecyclerViewActivity;
 import com.gkail.tools.service.ScreenService;
 import com.gkail.tools.sms.SMSActivatity;
 import com.gkail.tools.util.ScreenBrightnessUtils;
@@ -75,6 +76,8 @@ public class MainActivity extends BaseActivity {
     CheckBox cb1;
     @BindView(R.id.btn_recyclerView)
     Button btn_recyclerView;
+    @BindView(R.id.btn_deviceinfo)
+    Button btn_deviceinfo;
 
     @Override
     public int setContentView() {
@@ -118,7 +121,7 @@ public class MainActivity extends BaseActivity {
     @OnClick({R.id.btn, R.id.btn_sms, R.id.btn_lock, R.id.btn_led, R.id.btn_customView,
             R.id.btn_permission, R.id.btn_call, R.id.btn_accessibility, R.id.btn_setwallpaper,
             R.id.btn_silentModel, R.id.btn_normalModel, R.id.btn_network, R.id.btn_test,
-            R.id.btn_capture, R.id.btn_recyclerView})
+            R.id.btn_capture, R.id.btn_recyclerView, R.id.btn_deviceinfo})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn:
@@ -126,7 +129,8 @@ public class MainActivity extends BaseActivity {
                 if (mViewStub != null) {
                     mViewStub.inflate();
                 }
-                startActivity(new Intent(mContext, SensorActivity.class));
+//                startActivity(new Intent(mContext, SensorActivity.class));
+                startActivity(new Intent(mContext, RxjavaTestActivity.class));
                 break;
             case R.id.btn_sms:
                 startActivity(new Intent(this, SMSActivatity.class));
@@ -183,6 +187,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.btn_recyclerView:
                 startActivity(new Intent(mContext, RecyclerViewActivity.class));
+                break;
+            case R.id.btn_deviceinfo:
+                startActivity(new Intent(mContext, DeviceInfoActivity.class));
                 break;
         }
     }
