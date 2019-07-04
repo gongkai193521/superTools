@@ -2,9 +2,13 @@ package com.gkail.tools;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.projection.MediaProjectionManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -114,6 +118,11 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        ContentResolver resolver = getContentResolver();
+        ContentValues values = new ContentValues();
+        values.put("_id", 4);
+        values.put("name", "王麻子");
+        resolver.insert(Uri.parse("content://com.test.MyProvider/user"), values);
     }
 
     private PermissionManager mPermissionManager;

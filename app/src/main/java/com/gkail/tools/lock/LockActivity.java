@@ -34,6 +34,7 @@ public class LockActivity extends Activity implements View.OnClickListener {
     private void setListener() {
         findViewById(R.id.bt_lock).setOnClickListener(this);
         findViewById(R.id.bt_remove).setOnClickListener(this);
+        findViewById(R.id.bt_wipe).setOnClickListener(this);
     }
 
     private void init() {
@@ -47,6 +48,7 @@ public class LockActivity extends Activity implements View.OnClickListener {
             intent.setAction(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
             //指定给那个组件授权
             intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, componentName);
+            intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, R.string.app_name);
             startActivity(intent);
         }
     }
@@ -117,6 +119,9 @@ public class LockActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.bt_remove:
                 remove();
+                break;
+            case R.id.bt_wipe:
+                setWipe();
                 break;
             default:
                 break;
