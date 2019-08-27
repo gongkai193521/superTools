@@ -10,11 +10,13 @@ import android.util.Log;
  */
 
 public class AdminManageReceiver extends DeviceAdminReceiver {
+    @Override
     public void onEnabled(Context context, Intent intent) {
         super.onEnabled(context, intent);
         Log.i("----", "激活设备管理器了");
     }
 
+    @Override
     public void onDisabled(Context context, Intent intent) {
         super.onDisabled(context, intent);
         Log.i("----", "取消激活设备管理器了");

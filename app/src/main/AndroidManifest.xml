@@ -113,39 +113,10 @@
                 <action android:name="android.intent.action.ACTION_SHUTDOWN"/>
                 <!-- 解锁 -->
                 <action android:name="android.intent.action.USER_PRESENT"/>
-                <!-- 亮屏 -->
-                <action android:name="android.intent.action.SCREEN_ON"/>
-                <!-- 熄屏 -->
-                <action android:name="android.intent.action.SCREEN_OFF"/>
                 <!-- 网络 -->
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
                 <!-- USB -->
                 <action android:name="android.hardware.usb.action.USB_STATE"/>
-                <action android:name="android.intent.action.BATTERY_CHANGED"/>
-                <action android:name="android.intent.action.PHONE_STATE"/>
-                <action android:name="android.intent.action.DATA_STATE"/>
-                <action android:name="android.intent.action.PACKAGE_RESTARTED"/>
-                <action android:name="android.media.AUDIO_BECOMING_NOISY"/>
-                <action android:name="android.intent.action.TEST_GKP"/>
-                <action android:name="android.intent.action.DATA_ACTIVITY"/>
-                <action android:name="android.intent.action.BATTERY_CHANGED"/>
-                <action android:name="android.intent.action.DATE_CHANGED"/>
-                <action android:name="android.server.checkin.FOTA_CANCEL"/>
-                <action android:name="android.intent.action.MEDIABUTTON"/>
-                <action android:name="android.intent.action.MEDIA_MOUNTED"/>
-                <action android:name="android.intent.action.MEDIA_SCANNER_STARTED"/>
-                <action android:name="android.intent.action.MEDIA_SCANNER_FINISHED"/>
-                <action android:name="android.intent.action.TIME_SET"/>
-                <action android:name="android.intent.action.TIME_TICK"/>
-                <action android:name="android.intent.action.PACKAGE_ADDED"/>
-                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
-                <action android:name="android.intent.action.PHONE_STATE"/>
-                <action android:name="android.intent.action.SERVICE_STATE"/>
-                <action android:name="android.intent.action.SIG_STR"/>
-                <action android:name="android.intent.category.ALTERNATIVE"/>
-                <action android:name="android.intent.action.SETTINGS"/>
-                <action android:name="android.net.wifi.WIFI_STATE_CHANGED"/>
-                <action android:name="android.net.wifi.STATE_CHANGE"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>

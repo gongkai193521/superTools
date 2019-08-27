@@ -85,22 +85,14 @@ public class ToastUtils {
     }
 
     /**
-     * tip为空时内容为自定义msg
-     *
      * @param context
-     * @param tip
      * @param msg
      */
-    public static void show(Context context, String tip, String msg) {
+    public static void show(Context context, String msg) {
         if (Looper.getMainLooper() != Looper.myLooper() || context == null) {
             return;
         }
-        if (TextUtils.isEmpty(tip)) {
-            tip = msg;
-        } else if (tip.contains("Unable to resolve host")) {
-            return;
-        }
-        Toast.makeText(context, tip, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
     }
 
     /**

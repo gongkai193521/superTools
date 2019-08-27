@@ -2,13 +2,10 @@ package com.gkail.tools;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.ContentValues;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.media.projection.MediaProjectionManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -28,6 +25,7 @@ import com.gkail.tools.led.LEDActivity;
 import com.gkail.tools.lock.LockActivity;
 import com.gkail.tools.permission.PermissionManager;
 import com.gkail.tools.recyclerview.RecyclerViewActivity;
+import com.gkail.tools.sensor.SensorActivity;
 import com.gkail.tools.service.ScreenService;
 import com.gkail.tools.sms.SMSActivatity;
 import com.gkail.tools.util.ScreenBrightnessUtils;
@@ -94,7 +92,6 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initView() {
-        mObservable.subscribe(mObserver);
         mMediaProjectionManager = (MediaProjectionManager) getApplication().getSystemService(Context.MEDIA_PROJECTION_SERVICE);
         if (Constant.wx_checkd) {
             cb_wx.setChecked(true);
@@ -118,11 +115,22 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        ContentResolver resolver = getContentResolver();
-        ContentValues values = new ContentValues();
-        values.put("_id", 4);
-        values.put("name", "王麻子");
-        resolver.insert(Uri.parse("content://com.test.MyProvider/user"), values);
+//        ContentResolver resolver = getContentResolver();
+//        ContentValues values = new ContentValues();
+//        values.put("_id", 4);
+//        values.put("name", "王麻子");
+//        resolver.insert(Uri.parse("content://com.test.MyProvider/user"), values);
+
+        Intent intent = new Intent("com.viapalm.kidcares.study.finishtask");
+        intent.putExtra("from", "com.test");
+        intent.putExtra("type", 0);
+        intent.setComponent(new ComponentName("com.viapalm.educhildeluhuhang",
+                "com.kidcares.educontrol.receiver.StudyTaskReceiver"));
+        if (Build.VERSION.SDK_INT >= 26) {
+            //加上这句话，可以解决在android8.0系统以上2个module之间发送广播接收不到的问题
+            intent.addFlags(0x01000000);
+        }
+        mContext.sendBroadcast(intent);//int 1表示已接收到指令
     }
 
     private PermissionManager mPermissionManager;
@@ -134,12 +142,12 @@ public class MainActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn:
-                mViewStub = (ViewStub) findViewById(R.id.viewStub);
+                mViewStub = findViewById(R.id.viewStub);
                 if (mViewStub != null) {
                     mViewStub.inflate();
                 }
-//                startActivity(new Intent(mContext, SensorActivity.class));
-                startActivity(new Intent(mContext, RxjavaTestActivity.class));
+                startActivity(new Intent(mContext, SensorActivity.class));
+//                startActivity(new Intent(mContext, RxjavaTestActivity.class));
                 break;
             case R.id.btn_sms:
                 startActivity(new Intent(this, SMSActivatity.class));
@@ -237,34 +245,4 @@ public class MainActivity extends BaseActivity {
             }
         }
     }
-
-    Observable mObservable = Observable.create(new ObservableOnSubscribe<Integer>() {
-
-        @Override
-        public void subscribe(ObservableEmitter<Integer> emitter) throws Exception {
-            emitter.onNext(1);
-        }
-    });
-    Observer mObserver = new Observer<Integer>() {
-        @Override
-        public void onSubscribe(Disposable d) {
-
-        }
-
-        @Override
-        public void onNext(Integer integer) {
-
-        }
-
-
-        @Override
-        public void onError(Throwable e) {
-
-        }
-
-        @Override
-        public void onComplete() {
-
-        }
-    };
 }
