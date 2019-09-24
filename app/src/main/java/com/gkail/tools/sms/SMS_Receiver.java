@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.telephony.SmsMessage;
 
-import com.viapalm.kidcares.wxphone.util.LogUtils;
+import com.gkail.tools.util.LogUtils;
 
 
 public class SMS_Receiver extends BroadcastReceiver {

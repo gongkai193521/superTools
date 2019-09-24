@@ -43,16 +43,17 @@ public class SMSActivatity extends AppCompatActivity implements View.OnClickList
         SMS_Receiver.registeSMSReceiver(this);
         rxPermissions = new RxPermissions(this);
         initView();
-        rxPermissions.request(Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS).subscribe(new Consumer<Boolean>() {
-            @Override
-            public void accept(Boolean aBoolean) throws Exception {
-                if (aBoolean) {
-                    ToastUtils.show(SMSActivatity.this, "已获取权限");
-                    tv_sms.setText(getSmsInPhone());
-                } else {
-                }
-            }
-        });
+        rxPermissions.request(Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS)
+                .subscribe(new Consumer<Boolean>() {
+                    @Override
+                    public void accept(Boolean aBoolean) throws Exception {
+                        if (aBoolean) {
+                            ToastUtils.show(SMSActivatity.this, "已获取权限");
+                            tv_sms.setText(getSmsInPhone());
+                        } else {
+                        }
+                    }
+                });
     }
 
     private void initView() {
@@ -115,8 +116,6 @@ public class SMSActivatity extends AppCompatActivity implements View.OnClickList
         return address;
     }
 
-    private int smsCount;
-
     @SuppressLint("LongLogTag")
     public String getSmsInPhone() {
         final String SMS_URI_ALL = "content://sms/"; // 所有短信
@@ -128,68 +127,62 @@ public class SMSActivatity extends AppCompatActivity implements View.OnClickList
         final String SMS_URI_QUEUED = "content://sms/queued"; // 待发送列表
 
         StringBuilder smsBuilder = new StringBuilder();
-
+        Cursor cur = null;
         try {
             Uri uri = Uri.parse(SMS_URI_ALL);
             String[] projection = new String[]{"_id", "address", "person",
                     "body", "date", "type",};
-            Cursor cur = getContentResolver().query(uri, projection, null,
+            cur = getContentResolver().query(uri, projection, null,
                     null, "date desc"); // 获取手机内部短信
             // 获取短信中最新的未读短信
             // Cursor cur = getContentResolver().query(uri, projection,
             // "read = ?", new String[]{"0"}, "date desc");
-            smsCount = cur.getColumnCount();
-            if (cur.moveToFirst()) {
+            while (cur.moveToNext()) {
                 int index_Address = cur.getColumnIndex("address");
                 int index_Person = cur.getColumnIndex("person");
                 int index_Body = cur.getColumnIndex("body");
                 int index_Date = cur.getColumnIndex("date");
                 int index_Type = cur.getColumnIndex("type");
-
-                do {
-                    String strAddress = cur.getString(index_Address);
-                    int intPerson = cur.getInt(index_Person);
-                    String strbody = cur.getString(index_Body);
-                    long longDate = cur.getLong(index_Date);
-                    int intType = cur.getInt(index_Type);
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                    Date d = new Date(longDate);
-                    String strDate = dateFormat.format(d);
-                    String strType = "";
-                    if (intType == 1) {
-                        strType = "接收";
-                    } else if (intType == 2) {
-                        strType = "发送";
-                    } else if (intType == 3) {
-                        strType = "草稿";
-                    } else if (intType == 4) {
-                        strType = "发件箱";
-                    } else if (intType == 5) {
-                        strType = "发送失败";
-                    } else if (intType == 6) {
-                        strType = "待发送列表";
-                    } else if (intType == 0) {
-                        strType = "所以短信";
-                    } else {
-                        strType = "null";
-                    }
-                    smsBuilder.append("[ ");
-                    smsBuilder.append(strAddress + ", ");
-                    smsBuilder.append(intPerson + ", ");
-                    smsBuilder.append(strbody + ", ");
-                    smsBuilder.append(strDate + ", ");
-                    smsBuilder.append(strType);
-                    smsBuilder.append(" ]\n\n");
-                } while (cur.moveToNext());
-                if (!cur.isClosed()) {
-                    cur.close();
+                String strAddress = cur.getString(index_Address);
+                int intPerson = cur.getInt(index_Person);
+                String strbody = cur.getString(index_Body);
+                long longDate = cur.getLong(index_Date);
+                int intType = cur.getInt(index_Type);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                Date d = new Date(longDate);
+                String strDate = dateFormat.format(d);
+                String strType = "";
+                if (intType == 1) {
+                    strType = "接收";
+                } else if (intType == 2) {
+                    strType = "发送";
+                } else if (intType == 3) {
+                    strType = "草稿";
+                } else if (intType == 4) {
+                    strType = "发件箱";
+                } else if (intType == 5) {
+                    strType = "发送失败";
+                } else if (intType == 6) {
+                    strType = "待发送列表";
+                } else if (intType == 0) {
+                    strType = "所有短信";
+                } else {
+                    strType = "null";
                 }
-            } else {
-                smsBuilder.append("no result!");
+                smsBuilder.append("[ ");
+                smsBuilder.append(strAddress + ", ");
+                smsBuilder.append(intPerson + ", ");
+                smsBuilder.append(strbody + ", ");
+                smsBuilder.append(strDate + ", ");
+                smsBuilder.append(strType);
+                smsBuilder.append(" ]\n\n");
             }
-            smsBuilder.append("getSmsInPhone has executed!");
         } catch (SQLiteException ex) {
             Log.d("SQLiteException in getSmsInPhone", ex.getMessage());
+        } finally {
+            if (cur != null) {
+                cur.close();
+            }
         }
         return smsBuilder.toString();
     }

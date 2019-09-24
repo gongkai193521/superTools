@@ -5,6 +5,7 @@ import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -21,6 +22,7 @@ class SmsObserver extends ContentObserver {
 
     @Override
     public void onChange(boolean selfChange) {
+        Log.i("----", "SmsObserver == onChange ");
         //查询发送箱中的短信
         Cursor cursor = context.getContentResolver().query(Uri.parse(
                 "content://sms/outbox"), new String[]{"body"}, null, null, null);
