@@ -11,6 +11,9 @@ android {
         flavorDimensions "versionCode"
         multiDexEnabled true
     }
+    dataBinding {
+        enabled = true
+    }
     buildTypes {
         release {
             minifyEnabled true

@@ -47,6 +47,7 @@ public class CallUtil {
         }
         cs = cr.query(CallLog.Calls.CONTENT_URI, //系统方式获取通讯录存储地址
                 new String[]{
+                        CallLog.Calls._ID,
                         CallLog.Calls.CACHED_NAME,  //姓名
                         CallLog.Calls.NUMBER,    //号码
                         CallLog.Calls.TYPE,  //呼入/呼出(2)/未接
@@ -57,10 +58,11 @@ public class CallUtil {
         int i = 0;
         if (cs != null && cs.getCount() > 0) {
             for (cs.moveToFirst(); !cs.isAfterLast() & i < 50; cs.moveToNext()) {
-                String callName = cs.getString(0);
-                String callNumber = cs.getString(1);
+                String id = cs.getString(cs.getColumnIndex(CallLog.Calls._ID));
+                String callName = cs.getString(cs.getColumnIndex(CallLog.Calls.CACHED_NAME));
+                String callNumber = cs.getString(cs.getColumnIndex(CallLog.Calls.NUMBER));
                 //通话类型
-                int callType = Integer.parseInt(cs.getString(2));
+                int callType = Integer.parseInt(cs.getString(cs.getColumnIndex(CallLog.Calls.TYPE)));
                 String callTypeStr = "";
                 switch (callType) {
                     case CallLog.Calls.INCOMING_TYPE:
@@ -75,14 +77,14 @@ public class CallUtil {
                 }
                 //拨打时间
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                Date callDate = new Date(Long.parseLong(cs.getString(3)));
+                Date callDate = new Date(Long.parseLong(cs.getString((cs.getColumnIndex(CallLog.Calls.DATE)))));
                 String callDateStr = sdf.format(callDate);
                 //通话时长
-                int callDuration = Integer.parseInt(cs.getString(4));
+                int callDuration = Integer.parseInt(cs.getString((cs.getColumnIndex(CallLog.Calls.DURATION))));
                 int min = callDuration / 60;
                 int sec = callDuration % 60;
                 String callDurationStr = min + "分" + sec + "秒";
-                String callOne = "类型：" + callTypeStr + "；称呼：" + callName + "；号码："
+                String callOne = "ID：" + id + "；类型：" + callTypeStr + "；称呼：" + callName + "；号码："
                         + callNumber + "；通话时长：" + callDurationStr + "；时间:" + callDateStr
                         + "\n---------------------\n";
 

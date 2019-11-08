@@ -13,7 +13,7 @@ public class SMS_Receiver extends BroadcastReceiver {
     private static final String ACTION_SMS_SEND = "lab.sodino.sms.send";
     private static final String ACTION_SMS_DELIVERY = "lab.sodino.sms.delivery";
     private static final String ACTION_SMS_RECEIVER = "android.provider.Telephony.SMS_RECEIVED";
-
+    public static final String ACTION_SMS_DELIVER = "android.provider.Telephony.SMS_DELIVER";
     @Override
     public void onReceive(Context context, Intent intent) {
         String action = intent.getAction();
@@ -56,6 +56,7 @@ public class SMS_Receiver extends BroadcastReceiver {
             receiverFilter.addAction(ACTION_SMS_RECEIVER);
             receiverFilter.addAction(ACTION_SMS_SEND);
             receiverFilter.addAction(ACTION_SMS_DELIVERY);
+            receiverFilter.addAction(ACTION_SMS_DELIVER);
             context.registerReceiver(smsReceiver, receiverFilter);
         }
     }

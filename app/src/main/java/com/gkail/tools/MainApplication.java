@@ -4,8 +4,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.projection.MediaProjectionManager;
+import android.os.Handler;
+import android.provider.CallLog;
 import android.support.multidex.MultiDexApplication;
 import android.view.WindowManager;
+
+import com.gkail.tools.call.CallLogObserver;
 
 /**
  * Created by gongkai on 18/2/27.
@@ -48,6 +52,8 @@ public class MainApplication extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
         mContext = getApplicationContext();
+        getContentResolver().registerContentObserver(CallLog.Calls.CONTENT_URI,
+                true, new CallLogObserver(new Handler()));
     }
 
     public static WindowManager.LayoutParams getLayoutParams() {
