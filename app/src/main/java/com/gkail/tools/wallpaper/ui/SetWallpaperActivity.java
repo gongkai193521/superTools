@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.WallpaperManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.databinding.DataBindingUtil;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -11,20 +12,18 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
-import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.gkail.tools.Constant;
 import com.gkail.tools.R;
 import com.gkail.tools.base.BaseActivity;
+import com.gkail.tools.databinding.ActivitySetwallpaperBinding;
 import com.gkail.tools.wallpaper.service.CameraLiveWallpaperService;
 import com.gkail.tools.wallpaper.service.VideoLiveWallpaperService;
 import com.gkail.tools.wallpaper.util.WallpaperUtil;
 
 import java.io.IOException;
-
-import butterknife.BindView;
 
 /**
  * 壁纸开发
@@ -37,18 +36,19 @@ import butterknife.BindView;
 public class SetWallpaperActivity extends BaseActivity {
     private final static int REQUEST_CODE_SET_WALLPAPER = 0x001;
     static final String PERMISSION_CAMERA = Manifest.permission.CAMERA;
-    @BindView(R.id.cb_voice)
-    CheckBox mCbVoice;
 
     @Override
     public int setContentView() {
         return R.layout.activity_setwallpaper;
     }
 
+    private ActivitySetwallpaperBinding binding;
+
     @Override
     public void setupViews(Bundle savedInstanceState) {
-        mCbVoice.setChecked(Constant.wallpaper_sound_checkd);
-        mCbVoice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        binding = DataBindingUtil.setContentView(mContext, R.layout.activity_setwallpaper);
+        binding.cbVoice.setChecked(Constant.wallpaper_sound_checkd);
+        binding.cbVoice.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(
                     CompoundButton buttonView, boolean isChecked) {

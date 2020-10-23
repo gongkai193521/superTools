@@ -41,12 +41,11 @@ public class SMSActivatity extends AppCompatActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sms);
         SMS_Receiver.registeSMSReceiver(this);
-        rxPermissions = new RxPermissions(this);
         initView();
         rxPermissions.request(Manifest.permission.READ_SMS, Manifest.permission.SEND_SMS)
                 .subscribe(new Consumer<Boolean>() {
                     @Override
-                    public void accept(Boolean aBoolean) throws Exception {
+                    public void accept(Boolean aBoolean) {
                         if (aBoolean) {
                             ToastUtils.show(SMSActivatity.this, "已获取权限");
                             tv_sms.setText(getSmsInPhone());
@@ -62,7 +61,6 @@ public class SMSActivatity extends AppCompatActivity implements View.OnClickList
         et_addressee = findViewById(R.id.et_addressee);
         et_content = findViewById(R.id.et_content);
         bt_send.setOnClickListener(this);
-        rxPermissions = new RxPermissions(this);
     }
 
     @Override

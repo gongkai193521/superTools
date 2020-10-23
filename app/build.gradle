@@ -34,7 +34,7 @@ android {
     android.applicationVariants.all { variant ->
         variant.outputs.all {
             def releaseApkName = 'superTools_' + variant.buildType.name + '.apk'
-            outputFileName = new File("/deploy", releaseApkName)
+            outputFileName = new File("../deploy", releaseApkName)
         }
     }
     allprojects {
@@ -44,10 +44,7 @@ android {
     }
 
 }
-apply plugin: 'com.jakewharton.butterknife'
 dependencies {
-    compile 'com.jakewharton:butterknife:8.5.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'de.greenrobot:eventbus:3.0.0-beta1'
     implementation 'com.android.support:multidex:1.+'

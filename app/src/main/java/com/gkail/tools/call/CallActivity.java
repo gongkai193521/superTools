@@ -2,22 +2,20 @@ package com.gkail.tools.call;
 
 import android.Manifest;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
 import com.gkail.tools.R;
 import com.gkail.tools.base.BaseActivity;
-
-import butterknife.BindView;
+import com.gkail.tools.databinding.ActivityCallBinding;
 
 /**
  * Created by gongkai on 18/3/30.
  */
 
 public class CallActivity extends BaseActivity {
-    @BindView(R.id.tv_callhistory)
-    TextView tv_callhistory;
+    private ActivityCallBinding binding;
 
     @Override
     public int setContentView() {
@@ -26,10 +24,12 @@ public class CallActivity extends BaseActivity {
 
     @Override
     public void setupViews(Bundle savedInstanceState) {
+        binding = DataBindingUtil.setContentView(mContext, R.layout.activity_call);
         checkPermission();
     }
 
     private void checkPermission() {
+
         requestPermission(100, Manifest.permission.CALL_PHONE, new Runnable() {
             @Override
             public void run() {
@@ -46,7 +46,7 @@ public class CallActivity extends BaseActivity {
     private void showData() {
         //获取通话记录
         String callHistoryListStr = CallUtil.getCallHistoryList(this, getContentResolver());
-        tv_callhistory.setText("通话记录：" + "\n\n" + callHistoryListStr);
+        binding.tvCallhistory.setText("通话记录：" + "\n\n" + callHistoryListStr);
     }
 
     public void openCallIntercept(View view) {

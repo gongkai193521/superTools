@@ -36,13 +36,6 @@ public class CallUtil {
     public static String getCallHistoryList(Context context, ContentResolver cr) {
         Cursor cs;
         if (ActivityCompat.checkSelfPermission(context, Manifest.permission.READ_CALL_LOG) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return null;
         }
         cs = cr.query(CallLog.Calls.CONTENT_URI, //系统方式获取通讯录存储地址

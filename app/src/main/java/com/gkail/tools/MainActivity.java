@@ -1,18 +1,22 @@
 package com.gkail.tools;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.media.projection.MediaProjectionManager;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.provider.CallLog;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.CompoundButton;
@@ -21,6 +25,7 @@ import com.gkail.tools.activity.TestActivity;
 import com.gkail.tools.base.BaseActivity;
 import com.gkail.tools.call.BadgeIntentService;
 import com.gkail.tools.call.CallActivity;
+import com.gkail.tools.call.CallLogObserver;
 import com.gkail.tools.customview.ViewActivity;
 import com.gkail.tools.databinding.ActivityMainBinding;
 import com.gkail.tools.device.DeviceInfoActivity;
@@ -35,11 +40,14 @@ import com.gkail.tools.service.ScreenService;
 import com.gkail.tools.sms.SMSActivatity;
 import com.gkail.tools.util.ScreenBrightnessUtils;
 import com.gkail.tools.util.SoundUtils;
+import com.gkail.tools.util.ToastUtils;
 import com.gkail.tools.wallpaper.ui.SetWallpaperActivity;
 import com.gkail.tools.wifi.NetWorkActivity;
 
+import io.reactivex.functions.Consumer;
+
 public class MainActivity extends BaseActivity {
-    ActivityMainBinding binding;
+    private ActivityMainBinding binding;
 
     @Override
     public int setContentView() {
@@ -65,10 +73,21 @@ public class MainActivity extends BaseActivity {
                 Constant.wx_checkd = isChecked;
             }
         });
-        binding.cbWx.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        binding.cb1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 ScreenBrightnessUtils.autoBrightness(mContext, isChecked);
+            }
+        });
+        rxPermissions.request(Manifest.permission.READ_CALL_LOG, Manifest.permission.READ_PHONE_STATE).subscribe(new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean aBoolean) {
+                if (aBoolean) {
+                    getContentResolver().registerContentObserver(CallLog.Calls.CONTENT_URI,
+                            true, new CallLogObserver(new Handler()));
+                } else {
+                    ToastUtils.showLong(mContext, "请授予读取通话记录权限");
+                }
             }
         });
     }
@@ -76,11 +95,28 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        ContentResolver resolver = getContentResolver();
-        ContentValues values = new ContentValues();
-        values.put("_id", 4);
-        values.put("name", "王麻子");
-        resolver.insert(Uri.parse("content://com.test.MyProvider/user"), values);
+        Log.i("----", "getPhoneIMEI == " + getPhoneIMEI());
+        Log.d("----", "----" + Build.BRAND);
+//        ContentResolver resolver = getContentResolver();
+//        ContentValues values = new ContentValues();
+//        values.put("_id", 4);
+//        values.put("name", "王麻子");
+//        resolver.insert(Uri.parse("content://com.test.MyProvider/user"), values);
+    }
+
+    /**
+     * 获取手机的imei码
+     *
+     * @return
+     */
+    private String getPhoneIMEI() {
+        String imei = "";
+        TelephonyManager tm = (TelephonyManager) mContext.getSystemService(TELEPHONY_SERVICE);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE)
+                == PackageManager.PERMISSION_GRANTED) {
+            imei = tm.getDeviceId();
+        }
+        return imei;
     }
 
     private PermissionManager mPermissionManager;
@@ -91,7 +127,7 @@ public class MainActivity extends BaseActivity {
             mViewStub.inflate();
         }
         startActivity(new Intent(mContext, SensorActivity.class));
-        startActivity(new Intent(mContext, RxjavaTestActivity.class));
+//        startActivity(new Intent(mContext, RxjavaTestActivity.class));
     }
 
     public void btn_sms(View view) {
@@ -136,7 +172,11 @@ public class MainActivity extends BaseActivity {
     }
 
     public void btn_silentModel(View view) {
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (SoundUtils.checkNotiPermission()) {
+                SoundUtils.setSilentModel();
+            }
+        }
     }
 
     public void btn_normalModel(View view) {

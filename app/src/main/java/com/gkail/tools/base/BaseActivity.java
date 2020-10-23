@@ -2,7 +2,6 @@ package com.gkail.tools.base;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,11 +19,11 @@ import com.gkail.tools.MainApplication;
 import com.gkail.tools.R;
 import com.gkail.tools.util.NetWorkUtil;
 import com.gkail.tools.util.ToastUtils;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.ButterKnife;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
@@ -36,6 +35,7 @@ import de.greenrobot.event.ThreadMode;
 public abstract class BaseActivity extends Activity {
     private Map<Integer, Runnable> allowablePermissionRunnables = new HashMap<>();
     private Map<Integer, Runnable> disallowablePermissionRunnables = new HashMap<>();
+    public RxPermissions rxPermissions;
     private Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
         public void dispatchMessage(Message msg) {
@@ -86,9 +86,8 @@ public abstract class BaseActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(setContentView());
-        ButterKnife.bind(this);
+        rxPermissions = new RxPermissions(this);
         setupViews(savedInstanceState);
         EventBus.getDefault().register(this);
         ActivityStackManager.addActivity(this);

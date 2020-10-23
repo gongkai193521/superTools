@@ -14,33 +14,12 @@ import com.gkail.tools.util.InputUtils;
 
 import org.xclcharts.view.ChartView;
 
-import butterknife.BindView;
-
 /**
  * Created by gongkai on 18/4/23.
  */
 
 public class DeviceInfoActivity extends BaseActivity {
-    @BindView(R.id.tv1)
-    TextView mTv1;
-    @BindView(R.id.tv2)
-    TextView mTv2;
-    @BindView(R.id.tv3)
-    TextView mTv3;
-    @BindView(R.id.tv4)
-    TextView mTv4;
-    @BindView(R.id.tv5)
-    TextView mTv5;
-    @BindView(R.id.tv6)
-    TextView mTv6;
-    @BindView(R.id.tv7)
-    TextView mTv7;
-    @BindView(R.id.tv8)
-    TextView mTv8;
-    @BindView(R.id.tv9)
-    TextView mTv9;
-    @BindView(R.id.tv10)
-    TextView mTv10;
+    private TextView mTv1, mTv2, mTv3, mTv4, mTv5, mTv6, mTv7, mTv8, mTv9, mTv10;
 
     @Override
     public int setContentView() {
@@ -49,7 +28,21 @@ public class DeviceInfoActivity extends BaseActivity {
 
     @Override
     public void setupViews(Bundle savedInstanceState) {
+        initView();
         showData();
+    }
+
+    private void initView() {
+        mTv1 = findViewById(R.id.tv1);
+        mTv2 = findViewById(R.id.tv2);
+        mTv3 = findViewById(R.id.tv3);
+        mTv4 = findViewById(R.id.tv4);
+        mTv5 = findViewById(R.id.tv5);
+        mTv6 = findViewById(R.id.tv6);
+        mTv7 = findViewById(R.id.tv7);
+        mTv8 = findViewById(R.id.tv8);
+        mTv9 = findViewById(R.id.tv9);
+        mTv10 = findViewById(R.id.tv10);
     }
 
     private void showData() {

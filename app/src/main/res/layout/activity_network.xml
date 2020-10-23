@@ -1,50 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:padding="10dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="setWifi"
-        android:text="设置WiFi"/>
+    <data>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="setNetWork"
-        android:text="设置数据网络"/>
+    </data>
 
-    <EditText
-        android:id="@+id/et_wifiHostName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="网络名称"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
 
-    <Spinner
-        android:id="@+id/sp_security"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="安全性"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="setWifi"
+            android:text="设置WiFi" />
 
-    <EditText
-        android:id="@+id/et_wifiHostPas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="密码至少包含8个字符"
-        android:visibility="gone"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="setNetWork"
+            android:text="设置数据网络" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="setWifiHost"
-        android:text="开启热点"/>
+        <EditText
+            android:id="@+id/et_wifiHostName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="网络名称" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="closeWifiHost"
-        android:text="关闭热点"/>
-</LinearLayout>
+        <Spinner
+            android:id="@+id/sp_security"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="安全性" />
+
+        <EditText
+            android:id="@+id/et_wifiHostPas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="密码至少包含8个字符"
+            android:visibility="gone" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="setWifiHost"
+            android:text="开启热点" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="closeWifiHost"
+            android:text="关闭热点" />
+    </LinearLayout>
+</layout>

@@ -1,20 +1,18 @@
 package com.gkail.tools.wifi;
 
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
 
 import com.gkail.tools.R;
 import com.gkail.tools.base.BaseActivity;
+import com.gkail.tools.databinding.ActivityNetworkBinding;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
 
 
 /**
@@ -22,13 +20,8 @@ import butterknife.BindView;
  */
 
 public class NetWorkActivity extends BaseActivity {
-    @BindView(R.id.et_wifiHostName)
-    EditText wifiHostName;
-    @BindView(R.id.sp_security)
-    Spinner mSpinner;
-    @BindView(R.id.et_wifiHostPas)
-    EditText wifiHostPas;
-    boolean security = false;
+    private boolean security = false;
+    private ActivityNetworkBinding binding;
 
     @Override
     public int setContentView() {
@@ -37,21 +30,22 @@ public class NetWorkActivity extends BaseActivity {
 
     @Override
     public void setupViews(Bundle savedInstanceState) {
+        binding = DataBindingUtil.setContentView(mContext, R.layout.activity_network);
         final List<String> list = new ArrayList<>();
         list.add("无");
         list.add("WPA2 PSK");
         ArrayAdapter arrayAdapter = new ArrayAdapter(mContext, R.layout.layout_spiner, list);
         //传入的参数分别为 Context , 未选中项的textview , 数据源List
-        mSpinner.setAdapter(arrayAdapter);
-        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        binding.spSecurity.setAdapter(arrayAdapter);
+        binding.spSecurity.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 if (position == 0) {
                     security = false;
-                    wifiHostPas.setVisibility(View.GONE);
+                    binding.etWifiHostPas.setVisibility(View.GONE);
                 } else {
                     security = true;
-                    wifiHostPas.setVisibility(View.VISIBLE);
+                    binding.etWifiHostPas.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -90,7 +84,7 @@ public class NetWorkActivity extends BaseActivity {
 
     public void setWifiHost(View view) {
         new WifiHostManager(this).setWifiApEnabled(
-                wifiHostName.getText().toString(), security, wifiHostPas.getText().toString());
+                binding.etWifiHostName.getText().toString(), security, binding.etWifiHostPas.getText().toString());
 //        new WifiHostManager(this).startWifiAp();
 
     }
